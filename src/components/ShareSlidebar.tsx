@@ -1,36 +1,28 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { QRCodeSVG } from "qrcode.react";
-import { Share2, Facebook, Twitter, Linkedin, Mail, QrCode, Instagram } from "lucide-react";
+import { Share2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+
+const websiteUrl = typeof window !== "undefined" ? window.location.origin : "";
+const shareTitle = "Superior Limousine LLC";
+const shareText = "Experience premier executive and luxury transportation with Superior Limousine LLC!";
 
 export const ShareSlidebar = () => {
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const websiteUrl = window.location.origin;
-  const shareTitle = "Superior Limousine LLC";
-  const shareText = "Experience premier executive and luxury transportation with Superior Limousine LLC!";
 
   const handleWebShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: shareTitle,
-          text: shareText,
-          url: websiteUrl,
-        });
+        await navigator.share({ title: shareTitle, text: shareText, url: websiteUrl });
       } catch (error) {
-        if ((error as Error).name !== 'AbortError') {
-          console.error('Error sharing:', error);
-        }
+        if ((error as Error).name !== "AbortError") console.error("Error sharing:", error);
       }
     } else {
       navigator.clipboard.writeText(websiteUrl);
-      toast({
-        title: "Link copied!",
-        description: "Website link has been copied to clipboard",
-      });
+      toast({ title: "Link copied!", description: "Website link has been copied to clipboard" });
     }
   };
 
@@ -46,6 +38,7 @@ export const ShareSlidebar = () => {
             <Share2 className="h-5 w-5" />
           </Button>
         </SheetTrigger>
+
         <SheetContent className="w-80 sm:w-96">
           <SheetHeader className="mb-6">
             <SheetTitle className="text-2xl">Share & Connect</SheetTitle>
@@ -53,32 +46,23 @@ export const ShareSlidebar = () => {
 
           {/* Share Buttons */}
           <div className="space-y-4 mb-8">
-            <h3 className="text-lg font-semibold mb-3">Share with Friends</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                onClick={handleWebShare}
-                variant="outline"
-                className="w-full border-primary/30 hover:bg-primary/10"
-              >
-                <Share2 className="w-4 h-4 mr-2" />
-                Share
-              </Button>
-            </div>
+            <h3 className="text-lg font-semibold mb-3">Share Our Services</h3>
+            <Button
+              onClick={handleWebShare}
+              variant="outline"
+              className="w-full border-primary/30 hover:bg-primary/10 flex items-center justify-center gap-2"
+            >
+              <Share2 className="w-4 h-4" /> Share
+            </Button>
           </div>
 
-          {/* QR Code Section */}
+          {/* QR Code */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold mb-3">Scan to Visit</h3>
             <div className="bg-white p-4 rounded-xl w-fit mx-auto">
-              <QRCodeSVG
-                value={websiteUrl}
-                size={200}
-                level="H"
-                includeMargin={true}
-              />
+              <QRCodeSVG value={websiteUrl} size={200} level="H" includeMargin />
             </div>
             <p className="text-sm text-muted-foreground text-center">
-              Scan this QR code to visit Superior Limousine, LLC
+              Scan this QR code to visit Superior Limousine LLC
             </p>
           </div>
         </SheetContent>

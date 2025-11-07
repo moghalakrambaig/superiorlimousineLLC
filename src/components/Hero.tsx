@@ -1,17 +1,22 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-limo.jpg";
+
+const fadeUp = (delay = 0.2) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, delay },
+});
 
 const Hero = () => {
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Image + Overlay */}
       <div className="absolute inset-0">
         <img
           src={heroImage}
           alt="Luxury limousine"
           className="w-full h-full object-cover"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent" />
       </div>
@@ -19,33 +24,21 @@ const Hero = () => {
       {/* Content */}
       <div className="relative h-full flex items-center">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="max-w-3xl"
-          >
+          <motion.div {...fadeUp(0.2)} className="max-w-3xl">
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              {...fadeUp(0.4)}
               className="font-display text-5xl md:text-7xl font-bold text-primary-foreground mb-6"
             >
               Experience Luxury on Every Mile
             </motion.h1>
+
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              {...fadeUp(0.6)}
               className="font-sans text-lg md:text-xl text-primary-foreground/90 mb-8 max-w-2xl"
-            >Premier Limousine Services For Every Occasion — Corporate or Personal. Travel With Elegance, Arrive In Style.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
             >
-            </motion.div>
+              Premier Limousine Services For Every Occasion — Corporate or
+              Personal. Travel With Elegance, Arrive In Style.
+            </motion.p>
           </motion.div>
         </div>
       </div>
